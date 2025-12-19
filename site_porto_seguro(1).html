@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porto Seguro</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1e1e2f;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #ffffff;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 380px;
+      background: #2a2a40;
+      padding: 24px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+
+    .menu {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .menu button {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      border-radius: 10px;
+      background: #3a3a55;
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .menu button:hover {
+      background: #4a4a70;
+    }
+
+    .content {
+      display: none;
+      margin-top: 12px;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    .action {
+      margin-top: 16px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      background: #ff6b81;
+      color: #fff;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .action:hover {
+      background: #ff4f6a;
+    }
+
+    .timer {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h1>Ei, respira comigo 🤍</h1>
+
+    <div class="menu">
+      <button onclick="show('calma')">Calma</button>
+      <button onclick="show('desenhar')">Desenhar</button>
+      <button onclick="show('contato')">Me chama</button>
+    </div>
+
+    <div id="calma" class="content active">
+      <p>
+        Se você chegou aqui, desacelera um pouco.
+        Fica comigo por alguns minutos.
+      </p>
+      <button class="action" onclick="startTimer()">Ficar 10 minutos comigo</button>
+      <div class="timer" id="timer"></div>
+    </div>
+
+    <div id="desenhar" class="content">
+      <p>Desenha qualquer coisa, sem pensar muito.</p>
+      <a href="https://quickdraw.withgoogle.com/?locale=pt_BR" target="_blank">
+        <button class="action">Abrir site de desenho</button>
+      </a>
+    </div>
+
+    <div id="contato" class="content">
+      <p>Se precisar, me chama aqui.</p>
+      <a href="https://wa.me/qr/RBBDJ6ICSCTTH1" target="_blank">
+        <button class="action">WhatsApp</button>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function show(id) {
+      document.querySelectorAll('.content').forEach(function(el) {
+        el.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+
+    var timerInterval = null;
+
+    function startTimer() {
+      var time = 10 * 60;
+      var timerEl = document.getElementById('timer');
+
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
+
+      timerInterval = setInterval(function() {
+        var min = Math.floor(time / 60);
+        var sec = time % 60;
+        timerEl.textContent = min + ':' + (sec < 10 ? '0' + sec : sec);
+
+        if (time <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          timerEl.textContent = 'Eu ainda tô aqui.';
+        }
+        time--;
+      }, 1000);
+    }
+  </script>
+
+</body>
+</html>
